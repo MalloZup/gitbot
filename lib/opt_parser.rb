@@ -28,17 +28,17 @@ module OptParser
    @opt_parser = OptionParser.new do |opt|
       opt.banner = "************************************************\n" \
         "Usage: gitbot [OPTIONS] \n" \
-        "EXAMPLE: ======> #{name} -r MalloZup/galaxy-botkins -c \"python-test\" " \
+        " EXAMPLE: ======> #{name} -r MalloZup/galaxy-botkins -c \"python-test\" " \
         "-d \"pyflakes_linttest\" -t /tmp/tests-to-be-executed -f \".py\"\n\n"
       opt.separator 'Options'
 
       opt.on('-r', '--repo REPO', 'github repo you want to run test against' \
-                              'EXAMPLE: USER/REPO  MalloZup/gitbot') do |repo|
+                              ' EXAMPLE: USER/REPO  MalloZup/gitbot') do |repo|
         @options[:repo] = repo
       end
 
       opt.on('-c', '--context CONTEXT', 'context to set on comment' \
-                                  'EXAMPLE: CONTEXT: python-test') do |context|
+                                  ' EXAMPLE: CONTEXT: python-test') do |context|
         @options[:context] = context
       end
 
