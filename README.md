@@ -5,6 +5,8 @@ Gitbot allow you to run tests on prs. It run on each Systems that support ruby a
 
 ### USAGE:
 ************************************************
+
+```console
 Usage: gitbot [OPTIONS] 
 EXAMPLE: ======> ./gitbot.rb -r MalloZup/gitbot -c "python-test" -d "pyflakes_linttest" -t /tmp/tests-to-be-executed -f ".py"
 
@@ -15,4 +17,5 @@ Options
     -t, --test TEST.SH               fullpath to the bashscript which contain test to be executed for pr
     -f, --file '.py'                 specify the file type of the pr which you wantto run the test against ex .py, .java, .rb
     -h, --help                       help
+```
 ************************************************
