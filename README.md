@@ -8,24 +8,25 @@ Gitbot was developed. to run jenkins job against a repo.
 It differs from travis because it's not limited on container or other, it just run 
 
 
-## Installation:
+## 1) Installation:
 
 ```console
 gem install octokit
 gem install netrc
 ```
 
-## Configuration:
+## 2) Configuration:
 
-The **only** config is to have a valid ``` /~.netrc``` file and the user has to have **read access credentials ** to the repo you want to test.
+The **only one ** config is to have a valid ``` /~.netrc``` file and the user has to have **read access credentials ** to the repo you want to test.
 Confiure the netrc file like this:
 
 ```
 machine api.github.com login MY_GITHUB_USE password MY_PASSWORD
 ```
 
-### USAGE:
-************************************************```console
+### 3) run it : USAGE:
+************************************************
+```console
 Usage: gitbot [OPTIONS] 
 EXAMPLE: ======> ./gitbot.rb -r MalloZup/gitbot -c "python-test" -d "pyflakes_linttest" -t /tmp/tests-to-be-executed -f ".py"
 
@@ -47,8 +48,6 @@ EXAMPLE: -c "python-pyflake", -c 'python-unit-tests'
 The context trigger the exec. of tests.
 
 The -f parameter, will run the test if any of this fily type is present.
-
-
 
 
 ************************************************
