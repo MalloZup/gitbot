@@ -75,8 +75,7 @@ f_not_exist_msg = "\'#{@test_file}\' doesn't exists.Enter valid file, -t option"
 raise f_not_exist_msg if File.file?(@test_file) == false
 @compliment_msg = "no failures found for #{@file_type} file type! Great job"
 # optional, this url will be appended on github page.(usually a jenkins) 
-@target_url = 'https://JENKINS_URL:job/' \
-             "MY_JOB/#{ENV['JOB_NUMBER']}"
+@target_url =  @options[:target_url] << "#{ENV['JOB_NUMBER']}"
 
 @client = Octokit::Client.new(netrc: true)
 @j_status = ''
