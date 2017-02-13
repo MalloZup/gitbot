@@ -19,6 +19,7 @@ def pr_test(upstream, pr_sha_com, repo, pr_branch)
   pr_com = @client.commit(repo, pr_sha_com)
   _author_pr = pr_com.author.login
   @comment = "##### files analyzed:\n #{@pr_files}\n"
+  @comment << 'for full logs, checkout the Details url'
   git.merge_pr_totarget(upstream, pr_branch, repo)
   run_bash
   git.del_pr_branch(upstream, pr_branch)
