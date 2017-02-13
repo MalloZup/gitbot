@@ -37,19 +37,20 @@ Options
     -c, --context CONTEXT            context to set on comment EXAMPLE: CONTEXT: python-test
     -d, --description DESCRIPTION    description to set on comment
     -t, --test TEST.SH               fullpath to the script which contain test to be executed against the pr
-    -f, --file '.py'                 specify the file type of the pr which you wantto run the test against ex .py, .java, .rb
+    -f, --file '.py'                 specify the file type of the pr which you want to run the test against ex .py, .java, .rb
     -h, --help                       help
 ```
 
-Basically gitbot run an arbitrary file (-f) (could be bash, python, ruby), for each open PR.
-The description  -d is just for readability purpose.
+Basically gitbot run an arbitrary file (-f) (could be bash, python, ruby), against each open PR.
+If you have 10 untested PRs, you have to run it 10 times. 
+Gitbot was especially so designed, because 1 run equals a 1 Jenkins Job.
+
 The **context ** -c  is important: make an **unique context name** for each test category you want to run.
 
-EXAMPLE: -c "python-pyflake", -c 'python-unit-tests'
+EXAMPLE: 
+```-c "python-pyflake", -c 'python-unit-tests'```
 
 The context trigger the exec. of tests.
-
-The -f parameter, will run the test if any of this fily type is present.
 
 
 ************************************************
