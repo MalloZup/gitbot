@@ -46,8 +46,8 @@ module OptParser
         @options[:description] = description
       end
 
-      opt.on('-t', '--test TEST.SH', 'fullpath to the bash' \
-             'script which contain test to be executed for pr') do |test_file|
+      opt.on('-t', '--test TEST.SH', 'fullpath to the' \
+             'script which contain test to be executed against pr') do |test_file|
         @options[:test_file] = test_file
       end
       

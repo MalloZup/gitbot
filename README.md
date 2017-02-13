@@ -36,7 +36,7 @@ Options
     -r, --repo REPO                  github repo you want to run test against EXAMPLE: USER/REPO  MalloZup/gitbot
     -c, --context CONTEXT            context to set on comment EXAMPLE: CONTEXT: python-test
     -d, --description DESCRIPTION    description to set on comment
-    -t, --test TEST.SH               fullpath to the bashscript which contain test to be executed for pr
+    -t, --test TEST.SH               fullpath to the script which contain test to be executed against the pr
     -f, --file '.py'                 specify the file type of the pr which you wantto run the test against ex .py, .java, .rb
     -h, --help                       help
 ```
