@@ -2,9 +2,41 @@
 
 Gitbot allow you to run tests on prs. It run on each Systems that support ruby and octokit.
 
+# Why gitbot?
+
+Gitbot was developed. to run jenkins job against a repo.
+It differs from travis because it's not limited on container or other, it just run 
+
+
+## Installation:
+
+```console
+gem install octokit
+gem install netrc
+```
+
+## Configuration:
+
+The **only** config is to have a valid ``` /~.netrc``` file and the user has to have **read access credentials ** to the repo you want to test.
+Confiure the netrc file like this:
+
+```
+machine api.github.com login MY_GITHUB_USE password MY_PASSWORD
+```
 
 ### USAGE:
 ************************************************
+
+Basically gitbot run an arbitrary file (-f) (could be bash, python, ruby), for each open PR.
+The description  -d is just for readability purpose.
+The **context ** -c  is important: make an **unique context name** for each test category you want to run.
+
+EXAMPLE: -c "python-pyflake", -c 'python-unit-tests'
+
+The context trigger the exec. of tests.
+
+The -f parameter, will run the test if any of this fily type is present.
+
 
 ```console
 Usage: gitbot [OPTIONS] 
