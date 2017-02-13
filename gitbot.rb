@@ -19,9 +19,11 @@ def pr_test(upstream, pr_sha_com, repo, pr_branch)
   pr_com = @client.commit(repo, pr_sha_com)
   _author_pr = pr_com.author.login
   # @comment = "##### files analyzed:\n #{@pr_files}\n"
-  @comment = '##### for jenkins-logs checkout the Details url **'
+  @comment = '#### for jenkins-logs checkout the Details url'
   git.merge_pr_totarget(upstream, pr_branch, repo)
   run_bash
+  @comment = 'TEST FAIL' if @j_status = 'failure' 
+  @comment = 'TEST OK! GREAT' if @j_status = 'success'
   git.del_pr_branch(upstream, pr_branch)
 end
 
@@ -76,7 +78,7 @@ f_not_exist_msg = "\'#{@test_file}\' doesn't exists.Enter valid file, -t option"
 raise f_not_exist_msg if File.file?(@test_file) == false
 @compliment_msg = "no failures found for #{@file_type} file type! Great job"
 # optional, this url will be appended on github page.(usually a jenkins) 
-@target_url =  @options[:target_url] << "#{ENV['JOB_NUMBER']}"
+@target_url =  @options[:target_url] + "#{ENV['JOB_NUMBER']}"
 
 @client = Octokit::Client.new(netrc: true)
 @j_status = ''
