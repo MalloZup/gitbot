@@ -25,7 +25,18 @@ machine api.github.com login MY_GITHUB_USE password MY_PASSWORD
 ```
 
 ### USAGE:
-************************************************
+************************************************```console
+Usage: gitbot [OPTIONS] 
+EXAMPLE: ======> ./gitbot.rb -r MalloZup/gitbot -c "python-test" -d "pyflakes_linttest" -t /tmp/tests-to-be-executed -f ".py"
+
+Options
+    -r, --repo REPO                  github repo you want to run test against EXAMPLE: USER/REPO  MalloZup/gitbot
+    -c, --context CONTEXT            context to set on comment EXAMPLE: CONTEXT: python-test
+    -d, --description DESCRIPTION    description to set on comment
+    -t, --test TEST.SH               fullpath to the bashscript which contain test to be executed for pr
+    -f, --file '.py'                 specify the file type of the pr which you wantto run the test against ex .py, .java, .rb
+    -h, --help                       help
+```
 
 Basically gitbot run an arbitrary file (-f) (could be bash, python, ruby), for each open PR.
 The description  -d is just for readability purpose.
@@ -38,16 +49,6 @@ The context trigger the exec. of tests.
 The -f parameter, will run the test if any of this fily type is present.
 
 
-```console
-Usage: gitbot [OPTIONS] 
-EXAMPLE: ======> ./gitbot.rb -r MalloZup/gitbot -c "python-test" -d "pyflakes_linttest" -t /tmp/tests-to-be-executed -f ".py"
 
-Options
-    -r, --repo REPO                  github repo you want to run test against EXAMPLE: USER/REPO  MalloZup/gitbot
-    -c, --context CONTEXT            context to set on comment EXAMPLE: CONTEXT: python-test
-    -d, --description DESCRIPTION    description to set on comment
-    -t, --test TEST.SH               fullpath to the bashscript which contain test to be executed for pr
-    -f, --file '.py'                 specify the file type of the pr which you wantto run the test against ex .py, .java, .rb
-    -h, --help                       help
-```
+
 ************************************************
