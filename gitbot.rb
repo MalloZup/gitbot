@@ -21,7 +21,7 @@ def pr_test(upstream, pr_sha_com, repo, pr_branch)
   git.merge_pr_totarget(upstream, pr_branch, repo)
   run_bash
   @comment = "```@#{_author_pr} ``` your PR failed the **#{@context}**" if @j_status == 'failure' 
-  @comment = "#### for logs checkout the Details url \n" if @j_status == 'failure'
+  @comment << "#### for logs checkout the Details url \n" if @j_status == 'failure'
   git.del_pr_branch(upstream, pr_branch)
 end
 
