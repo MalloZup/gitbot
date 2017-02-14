@@ -32,15 +32,20 @@ machine api.github.com login MY_GITHUB_USE password MY_PASSWORD
 ************************************************
 ```console
 Usage: gitbot [OPTIONS] 
-EXAMPLE: ======> ./gitbot.rb -r MalloZup/gitbot -c "python-test" -d "pyflakes_linttest" -t /tmp/tests-to-be-executed -f ".py"
+ EXAMPLE: ======> ./gitbot.rb -r MalloZup/galaxy-botkins -c "python-test" -d "pyflakes_linttest" -u TARGET_URL -t /tmp/tests-to-be-executed -f ".py"
 
-Options
+MANDATORY Options
     -r, --repo REPO                  github repo you want to run test against EXAMPLE: USER/REPO  MalloZup/gitbot
     -c, --context CONTEXT            context to set on comment EXAMPLE: CONTEXT: python-test
     -d, --description DESCRIPTION    description to set on comment
-    -t, --test TEST.SH               fullpath to the script which contain test to be executed against the pr
-    -f, --file '.py'                 specify the file type of the pr which you want to run the test against ex .py, .java, .rb
+    -t, --test TEST.SH               fullpath to thescript which contain test to be executed against pr
+    -f, --file '.py'                 specify the file type of the pr which you wantto run the test against ex .py, .java, .rb
+OPTIONAL Options
+    -u, --url TARGET_URL             specify the url to append to github review usually is the jenkins url of the job
+HELP
     -h, --help                       help
+***************************************************************
+
 ```
 
 Basically gitbot run an arbitrary file (-f) (could be bash, python, ruby), against each open PR.
