@@ -12,7 +12,8 @@ class GitOp
   # where the author of pr wanted to submit
   def goto_prj_dir(repo)
     # chech that dir exist, otherwise clone it
-    if File.directory?(@git_dir) == false
+    if File.directory?(@git_dir) == false ||
+       File.directory?(@git_dir + "/" + repo.split('/')[1])
       FileUtils.mkdir_p(@git_dir)
       Dir.chdir @git_dir
       puts 'cloning the project in git_dir'
