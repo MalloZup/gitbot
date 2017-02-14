@@ -1,6 +1,6 @@
 # Gitbot: automatize your Prs testing with your custom test env.
 
-![alt tag](help/gundam.png)
+![GUNDAM image](help/gundam.jpg)
 
 Gitbot allow you to run tests on prs. It run on each Systems that support ruby and octokit.
 
