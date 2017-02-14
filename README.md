@@ -1,7 +1,10 @@
-# Gitbot: automatize your Prs testing with your custom test env.
-
+# Gitbot
+![GUNDAM image](help/gundam.jpg)
 ![GUNDAM image](help/gundam.jpg)
 
+
+
+## Gitbot: automatize your Prs testing with your custom test env.
 Gitbot allow you to run tests on prs. It run on each Systems that support ruby and octokit.
 
 # Why gitbot?
@@ -21,7 +24,7 @@ gem install netrc
 
 ## 2) Configuration:
 
-The ** only one ** config is to have a valid ``` /~.netrc``` file and the user has to have ** read access credentials ** to the repo you want to test.
+The **only one** config is to have a valid ``` /~.netrc``` file and the user has to have **read access credentials** to the repo you want to test.
 Configure the netrc file like this:
 
 ```
@@ -54,7 +57,8 @@ The Open Pr will then scanned for a file type modified (-f ".py" as example). If
 If you have 10 untested PRs, you have to run it 10 times. 
 Gitbot was especially so designed, because 1 run equals a 1 Jenkins Job.
 
-The ** context  -c  is important: make an **unique context name ** for each test category you want to run.
+The context  -c  is important: **make an unique context name** for each test category you want to run.
+If you have same context name and the pr was already reviewed by gitbot, test will be not triggered.
 
 EXAMPLE: 
 ```-c "python-pyflake", -c 'python-unit-tests'```
