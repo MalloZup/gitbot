@@ -21,7 +21,6 @@ module OptParser
     OptParser.raise_verbose_help('DESCRIPTION') if @options[:description].nil?
     OptParser.raise_verbose_help('SCRIPT FILE') if @options[:test_file].nil?
     OptParser.raise_verbose_help('TYPE FILE') if @options[:file_type].nil? 
-    OptParser.raise_verbose_help('TARGET_URL') if @options[:target_url].nil? 
   end
  
   def OptParser.get_options
@@ -31,7 +30,7 @@ module OptParser
         "Usage: gitbot [OPTIONS] \n" \
         " EXAMPLE: ======> #{name} -r MalloZup/galaxy-botkins -c \"python-test\" " \
         "-d \"pyflakes_linttest\" -u TARGET_URL -t /tmp/tests-to-be-executed -f \".py\"\n\n"
-      opt.separator 'Options'
+      opt.separator 'MANDATORY Options'
 
       opt.on('-r', '--repo REPO', 'github repo you want to run test against' \
                               ' EXAMPLE: USER/REPO  MalloZup/gitbot') do |repo|
@@ -57,11 +56,14 @@ module OptParser
         @options[:file_type] = file_type
       end
 
+      opt.separator 'OPTIONAL Options'
+     
       opt.on('-u', "--url TARGET_URL", 'specify the url to append to github review' \
-                  'usually is the jenkins url of the job') do |target_url|
+                  ' usually is the jenkins url of the job') do |target_url|
         @options[:target_url] = target_url
       end
 
+      opt.separator 'HELP'
       opt.on('-h', '--help', 'help') do
         puts @opt_parser
         puts "***************************************************************\n"
