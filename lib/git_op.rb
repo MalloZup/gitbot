@@ -18,12 +18,23 @@ class GitOp
       puts 'cloning the project in git_dir'
       `git clone git@github.com:#{repo}.git`
     end
-    Dir.chdir @git_dir
+    # git_dir = /tmp/foo, we need to change to /tmp/foo/gitproject.git
+    if  @git_dir.include? repo.split('/')[1]
+      Dir.chdir @git_dir
+    end
+    Dir.chdir @git_dir + repo.split('/')[1]
+
+  end
+
+  def check_git_dir
+    raise "gitbot is not working on a git directory" if File.directory?('.git') == false
   end
   
   # merge pr_branch into upstream targeted branch
   def merge_pr_totarget(upstream, pr_branch, repo)
     goto_prj_dir(repo)
+    # check that we are in a git dir
+    check_git_dir
     `git checkout #{upstream}`
     `git fetch origin`
     `git pull origin #{upstream}`
