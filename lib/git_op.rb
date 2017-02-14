@@ -1,5 +1,7 @@
 #! /usr/bin/ruby
 
+require 'fileutils'
+
 class GitOp
   attr_reader :git_dir
   def initialize(git_dir)
