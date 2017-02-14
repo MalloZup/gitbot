@@ -22,7 +22,7 @@ class GitOp
     if  @git_dir.include? repo.split('/')[1]
       Dir.chdir @git_dir
     end
-    Dir.chdir @git_dir + repo.split('/')[1]
+    Dir.chdir @git_dir + "/" + repo.split('/')[1]
 
   end
 
