@@ -59,7 +59,7 @@ def launch_test_and_setup_status(repo, pr_head_sha, pr_head_ref, pr_base_ref)
                         context: @context, description: @description,
                         target_url: @target_url)
   # create comment
-  create_comment(repo, pr_head_sha, @comment)
+  create_comment(repo, pr_head_sha, @comment) if @j_status == 'failure'
 end
 # *********************************************
 
