@@ -21,8 +21,8 @@ gem install netrc
 
 ## 2) Configuration:
 
-The **only one ** config is to have a valid ``` /~.netrc``` file and the user has to have **read access credentials ** to the repo you want to test.
-Confiure the netrc file like this:
+The ** only one ** config is to have a valid ``` /~.netrc``` file and the user has to have ** read access credentials ** to the repo you want to test.
+Configure the netrc file like this:
 
 ```
 machine api.github.com login MY_GITHUB_USE password MY_PASSWORD
@@ -49,10 +49,12 @@ HELP
 ```
 
 Basically gitbot run an arbitrary file (-f) (could be bash, python, ruby), against each open PR.
+The Open Pr will then scanned for a file type modified (-f ".py" as example). If the pr doesn't modify a python file, gitbot doesn't run a test against the pr.
+
 If you have 10 untested PRs, you have to run it 10 times. 
 Gitbot was especially so designed, because 1 run equals a 1 Jenkins Job.
 
-The **context ** -c  is important: make an **unique context name** for each test category you want to run.
+The ** context  -c  is important: make an **unique context name ** for each test category you want to run.
 
 EXAMPLE: 
 ```-c "python-pyflake", -c 'python-unit-tests'```
