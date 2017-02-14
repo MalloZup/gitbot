@@ -21,6 +21,7 @@ module OptParser
     OptParser.raise_verbose_help('DESCRIPTION') if @options[:description].nil?
     OptParser.raise_verbose_help('SCRIPT FILE') if @options[:test_file].nil?
     OptParser.raise_verbose_help('TYPE FILE') if @options[:file_type].nil? 
+    OptParser.raise_verbose_help('GIT LOCAL DIR') if @options[:git_dir].nil? 
   end
  
   def OptParser.get_options
@@ -29,24 +30,24 @@ module OptParser
       opt.banner = "************************************************\n" \
         "Usage: gitbot [OPTIONS] \n" \
         " EXAMPLE: ======> #{name} -r MalloZup/galaxy-botkins -c \"python-test\" " \
-        "-d \"pyflakes_linttest\" -u TARGET_URL -t /tmp/tests-to-be-executed -f \".py\"\n\n"
+        "-d \"pyflakes_linttest\" -g /tmp/pr-ruby01/ -t /tmp/tests-to-be-executed -f \".py\"\n\n"
       opt.separator 'MANDATORY Options'
 
-      opt.on('-r', '--repo REPO', 'github repo you want to run test against' \
+      opt.on('-r', "--repo 'REPO'", 'github repo you want to run test against' \
                               ' EXAMPLE: USER/REPO  MalloZup/gitbot') do |repo|
         @options[:repo] = repo
       end
 
-      opt.on('-c', '--context CONTEXT', 'context to set on comment' \
+      opt.on('-c', "--context 'CONTEXT'", 'context to set on comment' \
                                   ' EXAMPLE: CONTEXT: python-test') do |context|
         @options[:context] = context
       end
 
-      opt.on('-d', '--description DESCRIPTION', 'description to set on comment') do |description|
+      opt.on('-d', "--description 'DESCRIPTION'", 'description to set on comment') do |description|
         @options[:description] = description
       end
 
-      opt.on('-t', '--test TEST.SH', 'fullpath to the' \
+      opt.on('-t', "--test 'TEST.SH'", 'fullpath to the' \
              'script which contain test to be executed against pr') do |test_file|
         @options[:test_file] = test_file
       end
@@ -56,6 +57,11 @@ module OptParser
         @options[:file_type] = file_type
       end
 
+      opt.on('-g', "--git_dir 'GIT_LOCAL_DIR'", 'specify a location where gitbot will clone the github project' \
+                  'EXAMPLE : /tmp/pr-test/ if the dir doesnt exists, gitbot will create one.') do |git_dir|
+        @options[:git_dir] = git_dir
+      end
+      
       opt.separator 'OPTIONAL Options'
      
       opt.on('-u', "--url TARGET_URL", 'specify the url to append to github review' \

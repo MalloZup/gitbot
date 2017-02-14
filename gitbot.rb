@@ -65,7 +65,7 @@ end
 
 @options = OptParser.get_options
 # git_dir is where we have the github repo in our machine
-@git_dir = "/tmp/#{@options[:repo].split('/')[1]}"
+@git_dir = "#{@options[:git_dir]}"
 @pr_files = []
 @file_type = @options[:file_type]
 repo = @options[:repo]

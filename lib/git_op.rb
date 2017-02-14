@@ -11,8 +11,9 @@ class GitOp
   def goto_prj_dir(repo)
     # chech that dir exist, otherwise clone it
     if File.directory?(@git_dir) == false
-      Dir.chdir '/tmp'
-      puts 'cloning the project in tmp'
+      FileUtils.mkdir_p(@git_dir)
+      Dir.chdir @git_dir
+      puts 'cloning the project in git_dir'
       `git clone git@github.com:#{repo}.git`
     end
     Dir.chdir @git_dir
