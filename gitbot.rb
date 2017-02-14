@@ -18,12 +18,10 @@ def pr_test(upstream, pr_sha_com, repo, pr_branch)
   # get author:
   pr_com = @client.commit(repo, pr_sha_com)
   _author_pr = pr_com.author.login
-  # @comment = "##### files analyzed:\n #{@pr_files}\n"
-  @comment = '#### for jenkins-logs checkout the Details url'
   git.merge_pr_totarget(upstream, pr_branch, repo)
   run_bash
-  @comment = 'TEST FAIL' if @j_status == 'failure' 
-  @comment = 'TEST OK! GREAT' if @j_status == 'success'
+  @comment = "```@#{_author_pr} ``` your PR failed the ````#{@context} ```" if @j_status == 'failure' 
+  @comment = "#### for logs checkout the Details url \n" if @j_status == 'failure'
   git.del_pr_branch(upstream, pr_branch)
 end
 
