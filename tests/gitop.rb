@@ -2,11 +2,21 @@
 
 require_relative 'helper'
 
+require 'fileutils'
+
 class SimpleTest < Minitest::Test
 
   def test_basic
      git = GitOp.new("gitty")
      assert_equal('gitty', git.git_dir)
+  end
+  
+  def test_goto_prj_dir_function
+     git = GitOp.new("gitty")
+     assert_equal('gitty', git.git_dir)
+     # test the case the dir with repo doesn't exists
+     git.goto_prj_dir("MalloZup/gitbot")
+     FileUtils.rm_rf('gitty/gitbot')     
   end
 
 end
