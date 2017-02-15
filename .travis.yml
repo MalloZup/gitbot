@@ -1,7 +1,4 @@
 language: ruby
 
-
-install: gem install octokit netrc
-
 script:
 - bundle exec rubocop
