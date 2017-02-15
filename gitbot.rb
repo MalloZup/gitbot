@@ -20,8 +20,6 @@ def pr_test(upstream, pr_sha_com, repo, pr_branch)
   _author_pr = pr_com.author.login
   git.merge_pr_totarget(upstream, pr_branch, repo)
   run_bash
-  @comment = "```@#{_author_pr} ``` your PR failed the **#{@context}**\n" if @j_status == 'failure' 
-  @comment << "#### for logs checkout the Details url \n" if @j_status == 'failure'
   git.del_pr_branch(upstream, pr_branch)
 end
 
@@ -42,7 +40,6 @@ def check_for_all_files(repo, pr_number, type)
   end
 end
 
-# we put the results on the comment.
 def create_comment(repo, pr, comment)
   @client.create_commit_comment(repo, pr, comment)
 end
@@ -58,8 +55,6 @@ def launch_test_and_setup_status(repo, pr_head_sha, pr_head_ref, pr_base_ref)
   @client.create_status(repo, pr_head_sha, @j_status,
                         context: @context, description: @description,
                         target_url: @target_url)
-  # create comment
-  create_comment(repo, pr_head_sha, @comment) if @j_status == 'failure'
 end
 # *********************************************
 
@@ -74,7 +69,6 @@ repo = @options[:repo]
 @test_file = @options[:test_file]
 f_not_exist_msg = "\'#{@test_file}\' doesn't exists.Enter valid file, -t option"
 raise f_not_exist_msg if File.file?(@test_file) == false
-@compliment_msg = "no failures found for #{@file_type} file type! Great job"
 # optional, this url will be appended on github page.(usually a jenkins) 
 @target_url =  @options[:target_url]
 
