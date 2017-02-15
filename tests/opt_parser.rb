@@ -1,16 +1,26 @@
 #! /usr/bin/ruby
 
-require 'minitest/autorun'
-require 'minitest/reporters'
-require_relative '../lib/opt_parser.rb'
+require_relative 'helper'
 
-#Options
-#    -r, --repo REPO                  github repo you want to run test againstEXAMPLE: USER/REPO  MalloZup/gitbot
-#    -c, --context CONTEXT            context to set on commentEXAMPLE: CONTEXT: python-test
-#    -d, --description DESCRIPTION    description to set on comment
-#    -t, --test TEST.SH               fullpath to the bashscript which contain test to be executed for pr
+#************************************************
+#Usage: gitbot [OPTIONS] 
+# EXAMPLE: ======> ./gitbot.rb -r MalloZup/galaxy-botkins -c "python-test" -d "pyflakes_linttest" -g /tmp/pr-ruby01/ -t /tmp/tests-to-be-executed -f ".py"
+#
+#MANDATORY Options
+#    -r, --repo 'REPO'                github repo you want to run test against EXAMPLE: USER/REPO  MalloZup/gitbot
+#    -c, --context 'CONTEXT'          context to set on comment EXAMPLE: CONTEXT: python-test
+#    -d, --description 'DESCRIPTION'  description to set on comment
+#    -t, --test 'TEST.SH'             fullpath to thescript which contain test to be executed against pr
 #    -f, --file '.py'                 specify the file type of the pr which you wantto run the test against ex .py, .java, .rb
+#    -g, --git_dir 'GIT_LOCAL_DIR'    specify a location where gitbot will clone the github projectEXAMPLE : /tmp/pr-test/ if the dir doesnt exists, gitbot will create one.
+#OPTIONAL Options
+#    -u, --url TARGET_URL             specify the url to append to github review usually is the jenkins url of the job
+#HELP
 #    -h, --help                       help
+#************************************************
+
+
+
 
 class SimpleTest < Minitest::Test
 
@@ -30,7 +40,7 @@ class SimpleTest < Minitest::Test
   end
 
   def test_full_option_import
-   hash = {repo: 'gino/gitbot', context: 'python-t', description: 'functional', test_file: 'gino.sh', file_type: '.sh'}
+   hash = {repo: 'gino/gitbot', context: 'python-t', description: 'functional', test_file: 'gino.sh', file_type: '.sh', git_dir: 'gitty'}
    OptParser.options = hash
    options = OptParser.get_options
    assert_equal('gino/gitbot', options[:repo])
@@ -38,5 +48,6 @@ class SimpleTest < Minitest::Test
    assert_equal('functional', options[:description])
    assert_equal('gino.sh', options[:test_file])
    assert_equal('.sh', options[:file_type])
+   assert_equal('gitty', options[:git_dir])
   end
 end
