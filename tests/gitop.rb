@@ -17,7 +17,6 @@ class SimpleTest < Minitest::Test
 
   def test_goto_prj_already_exist_dir
     git = GitOp.new("gitty")
-    raise "dir should exist" if  File.directory?('gitty') == false
     git.goto_prj_dir("MalloZup/gitbot")
     FileUtils.rm_rf('gitty')     
   end
