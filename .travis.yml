@@ -1,4 +1,8 @@
 language: ruby
 
+gemfile:
+- Gemfile
+
 script:
-- bundle exec rubocop
+- ruby tests/gitop.rb
+- ruby tests/opt_parser.rb   
