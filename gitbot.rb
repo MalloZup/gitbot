@@ -67,6 +67,8 @@ repo = @options[:repo]
 @context = @options[:context]
 @description = @options[:description]
 @test_file = @options[:test_file]
+@timeout = @options[:timeout]
+
 f_not_exist_msg = "\'#{@test_file}\' doesn't exists.Enter valid file, -t option"
 raise f_not_exist_msg if File.file?(@test_file) == false
 # optional, this url will be appended on github page.(usually a jenkins) 
@@ -126,5 +128,12 @@ prs.each do |pr|
     break
   end
 end
+
+# sleep timeout minutes to spare time from jenkins jobs
+unless @timeout.nil? || @timeout == 0 
+  puts "\nNO new PRs to review/test found! going to sleep for #{@timeout} secs"
+  sleep(@timeout)  
+end
+
 # jenkins
 exit 1 if @j_status == 'failure'

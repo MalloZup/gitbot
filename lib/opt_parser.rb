@@ -69,6 +69,13 @@ module OptParser
         @options[:target_url] = target_url
       end
 
+      opt.on('-s', "--secs TIMEOUT", 'specify the secs you want to wait/sleep if the' \
+                  ' gitbot is not finding any valid PRs to review. (usefull to spare jenkins jobs history)') do |timeout|
+  
+        @options[:timeout] = Integer(timeout)
+      end
+
+
       opt.separator 'HELP'
       opt.on('-h', '--help', 'help') do
         puts @opt_parser
