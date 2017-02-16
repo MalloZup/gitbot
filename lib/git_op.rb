@@ -37,9 +37,11 @@ class GitOp
     # check that we are in a git dir
     check_git_dir
     `git checkout #{upstream}`
-    `git fetch origin`
+    `git remote update`
+    `git fetch`
     `git pull origin #{upstream}`
     `git checkout -b PR-#{pr_branch} origin/#{pr_branch}`
+    puts `git branch`
   end
   
   # cleanup the pr_branch(delete it)
