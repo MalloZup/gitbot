@@ -51,8 +51,8 @@ HELP
 
 ```
 
-Basically gitbot run an arbitrary file (-f) (could be bash, python, ruby), against each open PR.
-The Open Pr will then scanned for a file type modified (-f ".py" as example). If the pr doesn't modify a python file, gitbot doesn't run a test against the pr.
+Basically gitbot run a validation script/commands (-t) (could be bash, python, ruby) against each open PR of your XXX Branch.
+The Open Pull-request will then scanned for modifications on specific file type modified (-f ".py" as example). If the pr doesn't modify a python file( -f '.py') gitbot doesn't run a test against the pr.
 
 If you have 10 untested PRs, you have to run it 10 times. 
 Gitbot was especially so designed, because 1 run equals a 1 Jenkins Job.
