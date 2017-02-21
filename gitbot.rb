@@ -42,6 +42,8 @@ end
 
 # this function setup first pending to PR, then execute the tests
 # then set the status according to the results of script executed.
+# pr_head = is the PR branch
+# base = is a the upstream branch, where the pr targets
 def launch_test_and_setup_status(repo, pr_head_sha, pr_head_ref, pr_base_ref)
   # pending
   @client.create_status(repo, pr_head_sha, 'pending',
