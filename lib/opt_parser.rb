@@ -49,6 +49,8 @@ module OptParser
 
       opt.on('-t', "--test 'TEST.SH'", 'fullpath to the' \
              'script which contain test to be executed against pr') do |test_file|
+        f_not_exist_msg = "\'#{test_file}\' doesn't exists.Enter valid file, -t option"
+        raise f_not_exist_msg if File.file?(test_file) == false
         @options[:test_file] = test_file
       end
       

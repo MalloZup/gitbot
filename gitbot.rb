@@ -4,8 +4,9 @@ require 'octokit'
 require 'optparse'
 require_relative 'lib/opt_parser'
 require_relative 'lib/git_op'
-# run bash script to validate.
-def run_bash
+
+# run validation script for validating the PR.
+def run_script
   out = `#{@test_file}`
   @j_status = 'failure' if $?.exitstatus.nonzero?
   @j_status = 'success' if $?.exitstatus.zero?
@@ -18,21 +19,16 @@ def pr_test(upstream, pr_sha_com, repo, pr_branch)
   # get author:
   pr_com = @client.commit(repo, pr_sha_com)
   _author_pr = pr_com.author.login
+  # merge PR-branch to upstream branch
   git.merge_pr_totarget(upstream, pr_branch, repo)
-  run_bash
+  # do valid tests
+  run_script
+  # del branch
   git.del_pr_branch(upstream, pr_branch)
 end
 
-# this function check only the file of a commit (latest)
-# if we push 2 commits at once, the fist get untracked.
-def check_for_files(repo, pr, type)
-  pr_com = @client.commit(repo, pr)
-  pr_com.files.each do |file|
-    @pr_files.push(file.filename) if file.filename.include? type
-  end
-end
-
-# this check all files for a pr_number
+# check all files of a Prs Number if they are a specific type
+# EX: Pr 56, we check if files are '.rb'
 def check_for_all_files(repo, pr_number, type)
   files = @client.pull_request_files(repo, pr_number)
   files.each do |file|
@@ -44,6 +40,8 @@ def create_comment(repo, pr, comment)
   @client.create_commit_comment(repo, pr, comment)
 end
 
+# this function setup first pending to PR, then execute the tests
+# then set the status according to the results of script executed.
 def launch_test_and_setup_status(repo, pr_head_sha, pr_head_ref, pr_base_ref)
   # pending
   @client.create_status(repo, pr_head_sha, 'pending',
@@ -68,24 +66,26 @@ repo = @options[:repo]
 @description = @options[:description]
 @test_file = @options[:test_file]
 @timeout = @options[:timeout]
-
-f_not_exist_msg = "\'#{@test_file}\' doesn't exists.Enter valid file, -t option"
-raise f_not_exist_msg if File.file?(@test_file) == false
 # optional, this url will be appended on github page.(usually a jenkins)
 @target_url = @options[:target_url]
 
 @client = Octokit::Client.new(netrc: true)
 @j_status = ''
 
-# fetch all PRS
+# fetch all open PRS
 prs = @client.pull_requests(repo, state: 'open')
-# exit if repo has no prs"
+# exit if repo has no prs open
 puts 'no Pull request OPEN on the REPO!' if prs.any? == false
 prs.each do |pr|
   puts '=' * 30 + "\n" + "TITLE_PR: #{pr.title}, NR: #{pr.number}\n" + '=' * 30
   # this check the last commit state, catch for review or not reviewd status.
   commit_state = @client.status(repo, pr.head.sha)
   begin
+    # the first element of array a review-test. 
+    # if the pr has travis test and one custom, we will have 2 elements.
+    # in this case, if the 1st element doesn't have the state property
+    # state property is "pending", failure etc. 
+    # if we don't have this, the PRs is "unreviewed"
     puts commit_state.statuses[0]['state']
   rescue NoMethodError
     # in this situation we have no reviews-tests set at all.
@@ -100,7 +100,7 @@ prs.each do |pr|
   end
   puts '*' * 30 + "\nPR is already reviewed by bot \n" + '*' * 30 + "\n"
   # we run the test in 2 conditions:
-  # 1) the description "pylint-test" is not set, so we are in a situation
+  # 1) the context "pylint-test" is not set, so we are in a situation
   # like we have already 3 tests runned against a pr, but not the current one.
   # 2) is like 1 but is when something went wrong and the pending status
   # was set, but the bot exited or was buggy, we want to rerun the test.
