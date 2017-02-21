@@ -70,7 +70,7 @@ repo = @options[:repo]
 @timeout = @options[:timeout]
 # optional, this url will be appended on github page.(usually a jenkins)
 @target_url = @options[:target_url]
-
+@pr_number = @options[:pr_number]
 @client = Octokit::Client.new(netrc: true)
 @j_status = ''
 
@@ -127,6 +127,15 @@ prs.each do |pr|
   if context_present == false || pending_on_context == true
     check_for_all_files(repo, pr.number, @file_type)
     next if @pr_files.any? == false
+    launch_test_and_setup_status(repo, pr.head.sha, pr.head.ref, pr.base.ref)
+    break
+  end
+ # we want redo sometimes test on a specific PR number
+ # (if the jenkins job get lost) even if the test was ok
+  next if @pr_number.nil?
+  puts "Got triggered by PR_NUMBER OPTION, rerunning on #{@pr_number}"
+  if @pr_number == pr.number
+    puts "found an open pr #{@pr_number}"
     launch_test_and_setup_status(repo, pr.head.sha, pr.head.ref, pr.base.ref)
     break
   end

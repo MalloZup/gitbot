@@ -77,6 +77,11 @@ module OptParser
         @options[:timeout] = Integer(timeout)
       end
 
+      opt.on('-P', "--PR NUMBER", 'specify the pr number for running the test.' \
+                  ' when using this option, you force gitbot to run tests against a specific PR NUMBER, even if the test was already run') do |pr_number|
+  
+        @options[:pr_number] = Integer(pr_number)
+      end
 
       opt.separator 'HELP'
       opt.on('-h', '--help', 'help') do
