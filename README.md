@@ -7,7 +7,7 @@
 ## Gitbot: automatize your Prs testing with your custom test env.
 Gitbot allow you to run tests on prs. It run on each Systems that support ruby and octokit.
 
-### Jump and See real examples
+### Read real examples
 
 [Real example](help/real_examples.md)
 
