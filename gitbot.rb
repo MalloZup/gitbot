@@ -60,7 +60,7 @@ end
 
 @options = OptParser.get_options
 # git_dir is where we have the github repo in our machine
-@git_dir = "#{@options[:git_dir]}"
+@git_dir = @options[:git_dir]
 @pr_files = []
 @file_type = @options[:file_type]
 repo = @options[:repo]
@@ -71,8 +71,8 @@ repo = @options[:repo]
 
 f_not_exist_msg = "\'#{@test_file}\' doesn't exists.Enter valid file, -t option"
 raise f_not_exist_msg if File.file?(@test_file) == false
-# optional, this url will be appended on github page.(usually a jenkins) 
-@target_url =  @options[:target_url]
+# optional, this url will be appended on github page.(usually a jenkins)
+@target_url = @options[:target_url]
 
 @client = Octokit::Client.new(netrc: true)
 @j_status = ''
@@ -103,13 +103,14 @@ prs.each do |pr|
   # 1) the description "pylint-test" is not set, so we are in a situation
   # like we have already 3 tests runned against a pr, but not the current one.
   # 2) is like 1 but is when something went wrong and the pending status
-  # was set, but the bot exited or was buggy, or unknown failures, we want to rerun the test.
-  # pending status is not a good status, so we should always have only ok or not ok.
+  # was set, but the bot exited or was buggy, we want to rerun the test.
+  # pending status is not a good status, always have only ok or fail status.
   # and repeat the test for the pending
 
-  #1) context_present == false make trigger the test, means we don't have tagged the PR with context
+  # 1) context_present == false  triggers test. >
+  # this means  the PR is not with context tagged
   context_present = false
-  for pr_status in (0..commit_state.statuses.size - 1) do 
+  for pr_status in (0..commit_state.statuses.size - 1) do
     context_present = true if commit_state.statuses[pr_status]['context'] == @context
   end
   # 2) pending
@@ -130,10 +131,12 @@ prs.each do |pr|
 end
 
 # sleep timeout minutes to spare time from jenkins jobs
-unless @timeout.nil? || @timeout == 0 
-  puts "\nNO new PRs to review/test found! going to sleep for #{@timeout} secs"
-  sleep(@timeout)  
+# if j_status is empty no code were executed.
+if @j_status.nil? || @j_status.empty?
+  unless @timeout.nil? || @timeout.zero?
+    puts "\nNO new PRs found! going to sleep for #{@timeout} secs"
+    sleep(@timeout)
+  end
 end
-
 # jenkins
 exit 1 if @j_status == 'failure'
