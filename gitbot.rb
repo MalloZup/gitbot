@@ -7,6 +7,9 @@ require_relative 'lib/git_op'
 
 # run validation script for validating the PR.
 def run_script
+  f_not_exist_msg = "\'#{@test_file}\' doesn't exists.Enter valid file, -t option"
+  raise f_not_exist_msg if File.file?(@test_file) == false
+
   out = `#{@test_file}`
   @j_status = 'failure' if $?.exitstatus.nonzero?
   @j_status = 'success' if $?.exitstatus.zero?
