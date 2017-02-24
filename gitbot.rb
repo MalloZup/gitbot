@@ -74,6 +74,7 @@ repo = @options[:repo]
 # optional, this url will be appended on github page.(usually a jenkins)
 @target_url = @options[:target_url]
 @pr_number = @options[:pr_number]
+Octokit.auto_paginate = true
 @client = Octokit::Client.new(netrc: true)
 @j_status = ''
 
