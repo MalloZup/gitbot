@@ -81,6 +81,11 @@ module OptParser
         @options[:pr_number] = Integer(pr_number)
       end
 
+      opt.on('-C', "--check", "check, if a PR requires test" \
+             'Run in checkmode and test if there is a Pull Request which requires a test') do |check|
+        @options[:check] = check
+      end
+
       opt.separator 'HELP'
       opt.on('-h', '--help', 'help') do
         puts @opt_parser
