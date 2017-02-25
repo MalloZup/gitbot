@@ -145,11 +145,14 @@ prs.each do |pr|
   end
 end
 
+STDOUT.flush
+
 # sleep timeout minutes to spare time from jenkins jobs
 # if j_status is empty no code were executed.
 if @j_status.nil? || @j_status.empty?
   unless @timeout.nil? || @timeout.zero?
     puts "\nNO new PRs found! going to sleep for #{@timeout} secs"
+    STDOUT.flush
     sleep(@timeout)
   end
 end
