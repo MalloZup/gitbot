@@ -1,1 +1,1 @@
-# MOVED TO https://github.com/openSUSE/gitbot
+# MOVED TO https://github.com/openSUSE/gitarro
